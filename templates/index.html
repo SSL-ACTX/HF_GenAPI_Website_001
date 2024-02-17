@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Image Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        {% for message in conversation %}
+        <div class="message-container">
+            {% if message.type == 'user' %}
+            <div class="user-message">
+                <p class="mb-0">{{ message.input_text }}</p>
+            </div>
+            {% else %}
+            <div class="bot-message">
+                {% if message.loading %}
+                <span class="loading-spinner"></span>
+                <p class="mb-0">Generating image...</p>
+                {% else %}
+                {% if message.image_url %}
+                <div class="user-message sent-message">
+                    <img src="{{ message.image_url }}" class="bot-image mt-3" alt="Generated Image">
+                </div>
+                <p class="mt-2">Time to generate: {{ message.generate_time }} seconds</p>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // JavaScript to handle form submission and display loading animation
+        document.querySelector('#messageForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var inputText = document.getElementById('input_text').value;
+            var apiSelect = document.getElementById('api_select').value;
+            
+            // Send form data asynchronously using AJAX
+            var formData = new FormData();
+            formData.append('input_text', inputText);
+            formData.append('api_select', apiSelect);
+            
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Update the conversation messages container with the new HTML content
+                document.querySelector('.container').innerHTML = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <!-- Fixed-bottom input box -->
+    <div class="fixed-bottom-input">
+        <form id="messageForm" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <select class="form-control" id="api_select" name="api_select">
+                                <option value="https://api-inference.huggingface.co/models/playgroundai/playground-v2-1024px-aesthetic">Aesthetic API (1024x)</option>
+                                <option value="https://api-inference.huggingface.co/models/playgroundai/playground-v2-512px-base">Base API (512x)</option>
+                                <option value="https://api-inference.huggingface.co/models/cagliostrolab/animagine-xl-3.0">Animagine API (?x)</option>
+                                <option value="https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0">Stable Diffusion XL-Base-1 (?x)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="input_text" name="input_text" required placeholder="Type your message...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

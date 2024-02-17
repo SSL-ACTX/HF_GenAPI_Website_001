@@ -1,0 +1,92 @@
+body {
+	padding-bottom: 70px;
+	margin-bottom: 70px; /* Offset for the fixed-bottom input box */
+}
+.message-container {
+	max-width: 600px;
+	margin: auto;
+	margin-bottom: 20px;
+}
+
+.user-message, .bot-message {
+	border-radius: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+	max-width: 100%;
+	word-wrap: break-word;
+	position: relative;
+}
+
+.user-message {
+	background-color: #9c9c9c; /* Blue for user messages */
+	color: white;
+}
+
+.bot-message {
+	background-color: #404244; /* Gray for bot messages */
+	color: white;
+}
+
+.bot-image {
+	width: 100%;
+	border-radius: 10px;
+}
+
+.loading-spinner {
+	border: 4px solid rgba(255, 255, 255, 0.1);
+	border-left-color: #ffffff;
+	animation: spin 1s linear infinite;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	margin-right: 10px;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.sent-message {
+	color: #007bff;
+}
+
+.fixed-bottom-input {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #343a40;
+	padding: 10px;
+	border-top: 1px solid #ccc;
+}
+
+/* <!-- .fixed-bottom-input { --> */
+	/* <!-- position: fixed; --> */
+	/* <!-- bottom: 0; --> */
+	/* <!-- left: 0; --> */
+	/* <!-- width: 100%; --> */
+	/* <!-- padding: 10px; --> */
+	/* <!-- border-top: 1px solid #ccc; --> */
+	/* <!-- max-width: 600px; --> */
+	/* <!-- margin: auto; --> */
+	/* <!-- background-color: #343a40; --> */
+	/* <!-- border-radius: 10px; --> */
+/* <!-- } --> */
+
+.input-group {
+	margin-bottom: 10px;
+}
+
+.input-group-append .btn-primary {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.btn-primary {
+	border-radius: 9px;
+}
+
+.form-control {
+	border-radius: 25px;
+}
