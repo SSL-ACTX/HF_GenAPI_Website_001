@@ -2,8 +2,7 @@
 
 ---
 ## Live at:
-https://degozaru3.pythonanywhere.com/
----
+- https://degozaru3.pythonanywhere.com/
 
 This Flask application generates images based on input text using various AI models and uploads them to ImgBB for sharing. It provides a simple web interface for users to input text and select the desired AI model for image generation.
 
